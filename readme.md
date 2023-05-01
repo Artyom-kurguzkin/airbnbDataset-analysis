@@ -17,5 +17,6 @@ data = mongo(connection_string = <YOUR_CONNECTION_STRING_HERE>)
 ```
 then load the file, by doing 
 ```R
-data$import(file("part-01/dat/data.bson"), bson = True)```
+data$import(file("part-01/dat/data.bson"), bson = True)
+```
 

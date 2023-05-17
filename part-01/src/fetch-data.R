@@ -22,7 +22,7 @@ library(tidyverse)
 data_tb = as_tibble(data$aggregate())
 
 
-# "clean data"
+ # "clean data"
 
 data_tb = select(add_column(data_tb,
               transmute(data_tb,
@@ -89,5 +89,17 @@ data_tb = select(
   -address
 )
 
-# This does work
-write_tsv(data_tb, file="part-01/dat/data.csv")
+# Replace any backslashes in the data, as they would be read as escape characters when loaded.
+#for (i in 1:ncol(data_tb))
+#{
+  #data_tb[ , i] = gsub('\\','/',data_tb[ , i], fixed=TRUE)
+  #stringr::str_replace_all(data_tb[ , i], c('\\'), c('/'))
+#}
+
+library(dplyr)
+
+data_tb %>% mutate(across(.fns = ~gsub('\\\\', '/', ., fixed = TRUE)))
+
+# Write file as a CSV
+write_tsv(data_tb, file="part-01/dat/data.tsv")
+# Note, the TSV file has backslashes (\) in the file, so you need to replace them using sed. `cat data.tsv | sed 's/\\/\//g' > data-fixed.tsv `

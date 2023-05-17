@@ -20,9 +20,15 @@ library(tidyverse)
 
 # Make the Tibble
 data_tb = as_tibble(data$aggregate())
-
+#copy = data_tb
 
  # "clean data"
+
+data_tb = select(data_tb, -last_scraped, -calendar_last_scraped, -name, -summary,
+                 -space, -description, -neighborhood_overview, -notes, -transit,
+                 -access, -interaction, -house_rules)
+
+
 
 data_tb = select(add_column(data_tb,
               transmute(data_tb,
@@ -33,13 +39,9 @@ data_tb = select(add_column(data_tb,
               review_scores_location = data_tb$review_scores$review_scores_location,
               review_scores_value = data_tb$review_scores$review_scores_value,
               review_scores_rating = data_tb$review_scores$review_scores_rating)),
-              -review_scores)
+              -review_scores, -reviews)
 
-data_tb = select(
-            add_column(data_tb,
-              transmute(data_tb, 
-                        images_picture_url = data_tb$images$picture_url)),
-              -images)
+data_tb = select(data_tb, -images)
 
 data_tb = select(
             add_column(data_tb,
@@ -53,22 +55,22 @@ data_tb = select(
 data_tb = select(
             add_column(data_tb,
              transmute(data_tb,
-                       host_id=data_tb$host$host_id,
-                       host_url=data_tb$host$host_url,
-                       host_name=data_tb$host$host_name,
-                       host_location=data_tb$host$host_location,
-                       host_about=data_tb$host$host_about,
+                       #host_id=data_tb$host$host_id,
+                       #host_url=data_tb$host$host_url,
+                       #host_name=data_tb$host$host_name,
+                       #host_location=data_tb$host$host_location,
+                       #host_about=data_tb$host$host_about,
                        host_response_time=data_tb$host$host_response_time,
-                       host_thumbnail_url=data_tb$host$host_thumbnail_url,
-                       host_picture_url=data_tb$host$host_picture_url,
-                       host_neighbourhood=data_tb$host$host_neighbourhood,
+                       #host_thumbnail_url=data_tb$host$host_thumbnail_url,
+                       #host_picture_url=data_tb$host$host_picture_url,
+                       #host_neighbourhood=data_tb$host$host_neighbourhood,
                        host_response_rate=data_tb$host$host_response_rate,
                        host_is_superhost=data_tb$host$host_is_superhost,
                        host_has_profile_pic=data_tb$host$host_has_profile_pic,
                        host_identity_verified=data_tb$host$host_identity_verified,
                        host_listings_count=data_tb$host$host_listings_count,
                        host_total_listings_count=data_tb$host$host_total_listings_count,
-                       host_verifications=data_tb$host$host_verifications
+                       #host_verifications=data_tb$host$host_verifications
                        )),
               -host
           )
@@ -76,13 +78,13 @@ data_tb = select(
 data_tb = select(
   add_column(data_tb,
              transmute(data_tb,
-                       address_street=data_tb$address$street,
-                       address_suburb=data_tb$address$suburb,
-                       address_government_area=data_tb$address$government_area,
-                       address_market=data_tb$address$market,
-                       address_country=data_tb$address$country,
+                       #address_street=data_tb$address$street,
+                       #address_suburb=data_tb$address$suburb,
+                       #address_government_area=data_tb$address$government_area,
+                       #address_market=data_tb$address$market,
+                       #address_country=data_tb$address$country,
                        address_country_code=data_tb$address$country_code,
-                       address_location_type=data_tb$address$location$type,
+                       #address_location_type=data_tb$address$location$type,
                        address_location_coordinates=data_tb$address$location$coordinates,
                        address_location_is_location_exact=data_tb$address$location$is_location_exact
              )),
@@ -100,6 +102,4 @@ library(dplyr)
 
 data_tb %>% mutate(across(.fns = ~gsub('\\\\', '/', ., fixed = TRUE)))
 
-# Write file as a CSV
 write_tsv(data_tb, file="part-01/dat/data.tsv")
-# Note, the TSV file has backslashes (\) in the file, so you need to replace them using sed. `cat data.tsv | sed 's/\\/\//g' > data-fixed.tsv `

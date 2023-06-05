@@ -8,36 +8,36 @@ library(tidyverse)
 library(caret)
 library(mlr)
 
-
+# Load the data
 data = read_tsv('part-01/dat/data.tsv')
-# Convert the tibble to a data frame
-data_frame <- as.data.frame(data)
 
 # Define the target variable column name
-target_col <- "target_variable"
+target_col <- "price"
 
 # Define the predictor column names
-predictor_cols <- c("predictor1", "predictor2", "predictor3")
+predictor_cols <- c(data$beds, data$bedrooms, data$bathrooms)
 
 # Split the data into training and testing sets
 set.seed(123)
-train_indices <- sample(1:nrow(data_frame), 0.7 * nrow(data_frame))
-train_data <- data_frame[train_indices, ]
-test_data <- data_frame[-train_indices, ]
 
-# Define the machine learning task
-task <- makeClassifTask(data = train_data, target = target_col, predictors = predictor_cols)
+inTraining <- createDataPartition(predictor_cols, p = .80, list = FALSE)
+training <- Sonar[ inTraining,]
+testing  <- Sonar[-inTraining,]
 
-# Define the learner
-learner <- makeLearner("classif.randomForest")
+
+train_indices <- sample(1:nrow(data), 0.8 * nrow(data))
+train_data <- data[train_indices, ]
+test_data <- data[-train_indices, ]
+
+# Create the formula for modeling
+formula <- as.formula(paste(target_col, paste(predictor_cols, collapse = " + "), sep = " ~ "))
 
 # Train the model
-model <- train(learner, task)
+model <- train(formula, data = train_data, method = "rf")
 
 # Make predictions on the test data
 predictions <- predict(model, newdata = test_data)
 
 # Evaluate the model
-performance <- confusionMatrix(predictions, test_data$target_variable)
+performance <- confusionMatrix(predictions, test_data[[target_col]])
 print(performance)
-

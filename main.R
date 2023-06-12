@@ -84,7 +84,8 @@ write_tsv(data_tb, file="data.tsv")
 ## PART 2 - DATA TRANSFORMATION ##
 ##################################
 
-# Because this sample dataset is already ready for analysis, no cleaning is required.
+# Because we have removed the unnecessary columns, and unnested the data in the step above,
+# and due to the fact that this sample dataset is already ready for analysis, no cleaning is required.
 
 
 #################################

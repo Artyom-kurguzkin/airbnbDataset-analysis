@@ -22,7 +22,11 @@ library(tidyverse)
 data_tb = as_tibble(data$aggregate())
 #copy = data_tb
 
+<<<<<<< HEAD
 # "clean data"
+=======
+ # "clean data"
+>>>>>>> b2a1e82ca71bcad67b1c821c79f057c588ee0dbd
 
 data_tb = select(data_tb, -last_scraped, -calendar_last_scraped, -name, -summary,
                  -space, -description, -neighborhood_overview, -notes, -transit,
@@ -31,6 +35,7 @@ data_tb = select(data_tb, -last_scraped, -calendar_last_scraped, -name, -summary
 
 
 data_tb = select(add_column(data_tb,
+<<<<<<< HEAD
                             transmute(data_tb,
                                       review_scores_accuracy = data_tb$review_scores$review_scores_accuracy, 
                                       review_scores_cleanliness = data_tb$review_scores$review_scores_cleanliness, 
@@ -40,10 +45,22 @@ data_tb = select(add_column(data_tb,
                                       review_scores_value = data_tb$review_scores$review_scores_value,
                                       review_scores_rating = data_tb$review_scores$review_scores_rating)),
                  -review_scores, -reviews)
+=======
+              transmute(data_tb,
+              review_scores_accuracy = data_tb$review_scores$review_scores_accuracy, 
+              review_scores_cleanliness = data_tb$review_scores$review_scores_cleanliness, 
+              review_scores_checkin = data_tb$review_scores$review_scores_checkin,
+              review_scores_communication = data_tb$review_scores$review_scores_communication,
+              review_scores_location = data_tb$review_scores$review_scores_location,
+              review_scores_value = data_tb$review_scores$review_scores_value,
+              review_scores_rating = data_tb$review_scores$review_scores_rating)),
+              -review_scores, -reviews)
+>>>>>>> b2a1e82ca71bcad67b1c821c79f057c588ee0dbd
 
 data_tb = select(data_tb, -images)
 
 data_tb = select(
+<<<<<<< HEAD
   add_column(data_tb,
              transmute(data_tb, 
                        availability_30 = data_tb$availability$availability_30, 
@@ -54,6 +71,18 @@ data_tb = select(
 
 data_tb = select(
   add_column(data_tb,
+=======
+            add_column(data_tb,
+              transmute(data_tb, 
+              availability_30 = data_tb$availability$availability_30, 
+              availability_60 = data_tb$availability$availability_60, 
+              availability_90 = data_tb$availability$availability_90, 
+              availability_365 = data_tb$availability$availability_365)),
+              -availability)
+
+data_tb = select(
+            add_column(data_tb,
+>>>>>>> b2a1e82ca71bcad67b1c821c79f057c588ee0dbd
              transmute(data_tb,
                        #host_id=data_tb$host$host_id,
                        #host_url=data_tb$host$host_url,
@@ -71,9 +100,15 @@ data_tb = select(
                        host_listings_count=data_tb$host$host_listings_count,
                        host_total_listings_count=data_tb$host$host_total_listings_count,
                        #host_verifications=data_tb$host$host_verifications
+<<<<<<< HEAD
              )),
   -host
 )
+=======
+                       )),
+              -host
+          )
+>>>>>>> b2a1e82ca71bcad67b1c821c79f057c588ee0dbd
 
 data_tb = select(
   add_column(data_tb,
@@ -94,12 +129,21 @@ data_tb = select(
 # Replace any backslashes in the data, as they would be read as escape characters when loaded.
 #for (i in 1:ncol(data_tb))
 #{
+<<<<<<< HEAD
 #data_tb[ , i] = gsub('\\','/',data_tb[ , i], fixed=TRUE)
 #stringr::str_replace_all(data_tb[ , i], c('\\'), c('/'))
+=======
+  #data_tb[ , i] = gsub('\\','/',data_tb[ , i], fixed=TRUE)
+  #stringr::str_replace_all(data_tb[ , i], c('\\'), c('/'))
+>>>>>>> b2a1e82ca71bcad67b1c821c79f057c588ee0dbd
 #}
 
 library(dplyr)
 
 data_tb %>% mutate(across(.fns = ~gsub('\\\\', '/', ., fixed = TRUE)))
 
+<<<<<<< HEAD
 write_tsv(data_tb, file="part-01/dat/data.tsv")
+=======
+write_tsv(data_tb, file="part-01/dat/data.tsv")
+>>>>>>> b2a1e82ca71bcad67b1c821c79f057c588ee0dbd

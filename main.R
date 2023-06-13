@@ -314,7 +314,7 @@ library(caret)
 library(mlr)
 library(Amelia)
 
-data = read_tsv('part-01/dat/data.tsv')
+data = read_tsv('data.tsv')
 
 data2 <- within(data, rm("first_review", "last_review", "address_country_code", "address_location_coordinates", "address_location_is_location_exact", "_id", "listing_url", "host_is_superhost", "host_has_profile_pic", "host_listings_count", "host_total_listings_count", "host_identity_verified"))
 data2 <- within(data2, rm("property_type", "room_type", "bed_type", "minimum_nights", "maximum_nights", "accommodates", "bedrooms", "beds", "bathrooms", "amenities", "extra_people", "guests_included", "weekly_price", "monthly_price"))
@@ -502,7 +502,7 @@ library(ClusterR)
 library(factoextra)
 
 #Loading the data
-data = read_tsv('part-01/dat/data.tsv')
+data = read_tsv('data.tsv')
 
 
 #Gathering information

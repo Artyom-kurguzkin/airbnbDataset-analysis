@@ -108,7 +108,6 @@ View(data)
 
 
 # Figure 2 - Histogram showing distribution of review_score_raiting
-
 ggplot( data = data, 
         aes( x    = review_scores_rating, 
              fill = "Histogram") ) +
@@ -121,42 +120,17 @@ ggplot( data = data,
         labs( title="review_scores_rating histogram" )
 
 
+
 #-------------------------------------
 # review score types correlation
 #-------------------------------------
-
-
 
 #review score subtypes: cleanliness, checkin, communication, location, value
 
 
 # cleanliness
 
-reviewScore_vs_cleanliness = lm( review_scores_rating ~ review_scores_cleanliness,  data)
-reviewScore_vs_cleanliness_equation = paste( "y = ",
-                                             coef( reviewScore_vs_cleanliness )[[1]],
-                                             "+ ",
-                                             coef( reviewScore_vs_cleanliness )[[2]],
-                                             "*x" )
-
-reviewScore_vs_cleanliness_equation        
-
-
-qplot( review_scores_cleanliness,
-       data     = data,
-       geom     = 'histogram' )
-
-
-qplot( review_scores_rating, 
-       review_scores_cleanliness, 
-       data    = data,
-       geom    = c( "point", "smooth" ),
-       method  = "lm" )
-#formula = y ~ poly( x, 2 ),
-#se     = FALSE,
-#ylim    = c( 0, 4000 ) )
-
-
+# statistic from table1
 
 cor( data$review_scores_rating, 
      data$review_scores_cleanliness,
@@ -166,28 +140,7 @@ cor( data$review_scores_rating,
 
 # checkin
 
-reviewScore_vs_checkin = lm( review_scores_rating ~ review_scores_checkin + review_scores_value,  data)
-reviewScore_vs_checkin_equation = paste( "y = ",
-                                         coef( reviewScore_vs_checkin )[[1]],
-                                         "+ ",
-                                         coef( reviewScore_vs_checkin )[[2]],
-                                         "*x" )
-
-reviewScore_vs_checkin_equation  
-
-
-ggplot( data = data ) + geom_histogram( aes( review_scores_checkin ) )
-
-
-qplot( review_scores_rating, 
-       review_scores_checkin, 
-       data    = data,
-       geom    = c( "point", "smooth" ),
-       method  = "lm" )
-#formula = y ~ poly( x, 2 ),
-#se     = FALSE,
-#ylim    = c( 0, 4000 ) )
-
+# statistic from table1
 
 cor( data$review_scores_rating, 
      data$review_scores_checkin,
@@ -197,27 +150,7 @@ cor( data$review_scores_rating,
 
 # communication
 
-reviewScore_vs_communication = lm( review_scores_rating ~ review_scores_communication + review_scores_value,  data)
-reviewScore_vs_communication_equation = paste( "y = ",
-                                               coef( reviewScore_vs_communication )[[1]],
-                                               "+ ",
-                                               coef( reviewScore_vs_communication )[[2]],
-                                               "*x" )
-
-reviewScore_vs_communication_equation  
-
-
-ggplot( data = data ) + geom_histogram( aes( review_scores_communication ) )
-
-qplot( review_scores_rating, 
-       review_scores_communication, 
-       data    = data,
-       geom    = c( "point", "smooth" ),
-       method  = "lm" )
-#formula = y ~ poly( x, 2 ),
-#se     = FALSE,
-#ylim    = c( 0, 4000 ) )
-
+# statistic from table1
 
 cor( data$review_scores_rating, 
      data$review_scores_communication,
@@ -228,26 +161,7 @@ cor( data$review_scores_rating,
 
 # location
 
-reviewScore_vs_location = lm( review_scores_rating ~ review_scores_location + review_scores_value,  data)
-reviewScore_vs_location_equation = paste( "y = ",
-                                          coef( reviewScore_vs_location )[[1]],
-                                          "+ ",
-                                          coef( reviewScore_vs_location )[[2]],
-                                          "*x" )
-
-reviewScore_vs_location_equation  
-
-ggplot( data = data ) + geom_histogram( aes( review_scores_location ) )
-
-qplot( review_scores_rating, 
-       review_scores_location, 
-       data    = data,
-       geom    = c( "point", "smooth" ),
-       method  = "lm" )
-#formula = y ~ poly( x, 2 ),
-#se     = FALSE,
-#ylim    = c( 0, 4000 ) )
-
+# statistic from table1
 
 cor( data$review_scores_rating, 
      data$review_scores_location,
@@ -257,49 +171,126 @@ cor( data$review_scores_rating,
 # cleanliness has the highest correlation coefficient.
 
 
+
 #-------------------------------------
-# review score vs property type
+# Exploring other variables
 #-------------------------------------
 
 
+# review score vs host identity verified
+
+# Figure 3
 qplot( review_scores_rating, 
        number_of_reviews, 
-       data = data, 
-       color = property_type )
+       data  = data, 
+       color = host_identity_verified ) +
+       labs( title="number_of_reviews VS review_score_rating scatterplot with host_identity_verified colorcoding" )
 
 
-ggplot( data, 
-        aes( x    = review_scores_rating, 
-             y    = property_type, 
-             fill = property_type ) ) + 
-  geom_boxplot() + 
-  labs( title = "property type vs review scores rating" )+
-  theme(legend.position="none" )
-
-
-
-#-------------------------------------
 # Country codes vs review score rating
-#-------------------------------------
 
-qplot( review_scores_rating, 
-       data     = data, 
-       facets   = address_country_code ~ ., 
-       geom     = "histogram" )
-
+# Figure 4
 install.packages('ggridges')
-library(ggridges)
+library( ggridges )
 
 ggplot( data, 
         aes( x    = review_scores_rating, 
              y    = address_country_code, 
              fill = 0.5 - abs( 0.5 - stat( ecdf ) ) 
-        ) ) +
-  stat_density_ridges( geom       = "density_ridges_gradient", 
-                       calc_ecdf  = TRUE ) +
-  scale_fill_viridis_c( name      = "Tail probability", 
-                        direction = -1 ) + 
-  labs( title="Coutry codes vs review scores raitnig" )
+            ) ) +
+        stat_density_ridges( geom       = "density_ridges_gradient", 
+                             calc_ecdf  = TRUE ) +
+        scale_fill_viridis_c( name      = "Tail probability", 
+                              direction = -1 ) + 
+        labs( title="address_country_codes vs review_scores_rating" )
+
+
+
+# review score vs property type
+
+# Figure 5
+ggplot( data, 
+        aes( x    = review_scores_rating, 
+             y    = reorder( property_type,
+                             review_scores_rating,
+                             na.rm = TRUE ), 
+             fill = property_type ) ) + 
+  geom_boxplot() + 
+  labs( title = "property type vs review scores rating",
+        y = "property_type" )+
+  theme(legend.position="none" )
+
+
+# Figure 6
+ggplot( data, aes( y    = reorder( property_type,
+                                   review_scores_rating,
+                                   FUN   = sum,
+                                   na.rm = TRUE ),
+                   fill = property_type ) ) +
+        geom_bar() +
+        guides(fill = "none") +
+        labs( title = "property_type bar graph",
+                  x = "count",
+                  y = "property_type")
+
+
+
+# review score vs response times
+
+# Figure 7
+ggplot( data, aes( x    = reorder( host_response_time,
+                                   review_scores_rating,
+                                   FUN   = sum,
+                                   na.rm = TRUE ),
+                   fill = host_response_time ) ) +
+  geom_bar() +
+  guides(fill = "none") +
+  labs( title = "host_response_time bar graph",
+        x = "" )
+
+  
+# Figure 8
+qplot( review_scores_rating, host_response_time, 
+       data  = data ) +
+  labs( title = "review_scores_rating vs response time",
+        x = "review_scores_rating",
+        y = "response_time")
+
+
+# Figure 9
+ggplot( data , aes( x = review_scores_rating, 
+                    y = host_response_time, 
+                    fill = number_of_reviews)) +
+  geom_tile() +
+  scale_fill_distiller( palette   = "Reds", 
+                        direction = 1 ) + 
+  labs( title = "host_response_time heatmap" )
+
+
+install.packages( "hrbrthemes" )
+library(hrbrthemes)
+
+
+# Figure 10
+data %>%
+  mutate( reviewRating = cut( review_scores_rating, 
+                              c( 50, 60, 70, 80, 90 ) 
+                            ), 
+          numberOfReviews = cut( number_of_reviews, 
+                                 breaks = c( 0, 5, 50, 100, 200, 400, 600 ) 
+                                )
+        ) %>%
+  ggplot( aes( reviewRating,
+               host_response_time, 
+               fill = numberOfReviews ) ) + 
+  geom_tile() +
+  scale_fill_manual( drop     = FALSE, 
+                     values   = colorRampPalette( c( "white","red" ) )( 6 ), 
+                     na.value ="#EEEEEE", 
+                     name   = "numberOfReviews" ) +
+  labs( title = "host_response_time heatmap",
+        y     = "response time",
+        x     = "review_scores_rating" )
 
 
 

@@ -108,7 +108,6 @@ View(data)
 
 
 # Figure 2 - Histogram showing distribution of review_score_raiting
-
 ggplot( data = data, 
         aes( x    = review_scores_rating, 
              fill = "Histogram") ) +
@@ -179,8 +178,8 @@ cor( data$review_scores_rating,
 
 
 # review score vs host identity verified
-# Figure 3
 
+# Figure 3
 qplot( review_scores_rating, 
        number_of_reviews, 
        data  = data, 
@@ -189,8 +188,8 @@ qplot( review_scores_rating,
 
 
 # Country codes vs review score rating
-# Figure 4
 
+# Figure 4
 install.packages('ggridges')
 library( ggridges )
 
@@ -270,6 +269,7 @@ ggplot( data , aes( x = review_scores_rating,
 
 install.packages( "hrbrthemes" )
 library(hrbrthemes)
+
 
 # Figure 10
 data %>%

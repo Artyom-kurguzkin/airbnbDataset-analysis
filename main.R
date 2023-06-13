@@ -107,9 +107,18 @@ data = read_tsv('data.tsv')
 View(data)
 
 
-# What influences the rating?
+# Figure 2 - Histogram showing distribution of review_score_raiting
 
-ggplot( data = data ) + geom_histogram( aes( review_scores_rating ) )
+ggplot( data = data, 
+        aes( x    = review_scores_rating, 
+             fill = "Histogram") ) +
+        geom_histogram( color = "black", 
+                        fill  = "lightblue", 
+                        bins  = 40, 
+                        na.rm = TRUE ) +
+        labs(fill = "") +
+        theme_minimal() +
+        labs( title="review_scores_rating histogram" )
 
 
 #-------------------------------------

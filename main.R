@@ -132,31 +132,7 @@ ggplot( data = data,
 
 # cleanliness
 
-reviewScore_vs_cleanliness = lm( review_scores_rating ~ review_scores_cleanliness,  data)
-reviewScore_vs_cleanliness_equation = paste( "y = ",
-                                             coef( reviewScore_vs_cleanliness )[[1]],
-                                             "+ ",
-                                             coef( reviewScore_vs_cleanliness )[[2]],
-                                             "*x" )
-
-reviewScore_vs_cleanliness_equation        
-
-
-qplot( review_scores_cleanliness,
-       data     = data,
-       geom     = 'histogram' )
-
-
-qplot( review_scores_rating, 
-       review_scores_cleanliness, 
-       data    = data,
-       geom    = c( "point", "smooth" ),
-       method  = "lm" )
-#formula = y ~ poly( x, 2 ),
-#se     = FALSE,
-#ylim    = c( 0, 4000 ) )
-
-
+# statistic from table1
 
 cor( data$review_scores_rating, 
      data$review_scores_cleanliness,
@@ -166,28 +142,7 @@ cor( data$review_scores_rating,
 
 # checkin
 
-reviewScore_vs_checkin = lm( review_scores_rating ~ review_scores_checkin + review_scores_value,  data)
-reviewScore_vs_checkin_equation = paste( "y = ",
-                                         coef( reviewScore_vs_checkin )[[1]],
-                                         "+ ",
-                                         coef( reviewScore_vs_checkin )[[2]],
-                                         "*x" )
-
-reviewScore_vs_checkin_equation  
-
-
-ggplot( data = data ) + geom_histogram( aes( review_scores_checkin ) )
-
-
-qplot( review_scores_rating, 
-       review_scores_checkin, 
-       data    = data,
-       geom    = c( "point", "smooth" ),
-       method  = "lm" )
-#formula = y ~ poly( x, 2 ),
-#se     = FALSE,
-#ylim    = c( 0, 4000 ) )
-
+# statistic from table1
 
 cor( data$review_scores_rating, 
      data$review_scores_checkin,
@@ -197,27 +152,7 @@ cor( data$review_scores_rating,
 
 # communication
 
-reviewScore_vs_communication = lm( review_scores_rating ~ review_scores_communication + review_scores_value,  data)
-reviewScore_vs_communication_equation = paste( "y = ",
-                                               coef( reviewScore_vs_communication )[[1]],
-                                               "+ ",
-                                               coef( reviewScore_vs_communication )[[2]],
-                                               "*x" )
-
-reviewScore_vs_communication_equation  
-
-
-ggplot( data = data ) + geom_histogram( aes( review_scores_communication ) )
-
-qplot( review_scores_rating, 
-       review_scores_communication, 
-       data    = data,
-       geom    = c( "point", "smooth" ),
-       method  = "lm" )
-#formula = y ~ poly( x, 2 ),
-#se     = FALSE,
-#ylim    = c( 0, 4000 ) )
-
+# statistic from table1
 
 cor( data$review_scores_rating, 
      data$review_scores_communication,
@@ -228,26 +163,7 @@ cor( data$review_scores_rating,
 
 # location
 
-reviewScore_vs_location = lm( review_scores_rating ~ review_scores_location + review_scores_value,  data)
-reviewScore_vs_location_equation = paste( "y = ",
-                                          coef( reviewScore_vs_location )[[1]],
-                                          "+ ",
-                                          coef( reviewScore_vs_location )[[2]],
-                                          "*x" )
-
-reviewScore_vs_location_equation  
-
-ggplot( data = data ) + geom_histogram( aes( review_scores_location ) )
-
-qplot( review_scores_rating, 
-       review_scores_location, 
-       data    = data,
-       geom    = c( "point", "smooth" ),
-       method  = "lm" )
-#formula = y ~ poly( x, 2 ),
-#se     = FALSE,
-#ylim    = c( 0, 4000 ) )
-
+# statistic from table1
 
 cor( data$review_scores_rating, 
      data$review_scores_location,

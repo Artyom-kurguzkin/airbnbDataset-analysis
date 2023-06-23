@@ -456,7 +456,7 @@ km.out
 
 #Determining the number of loops
 
-n <- 7
+n <- 10
 wss <- numeric(n)
 
 #Looping possible clusters n times
@@ -467,8 +467,8 @@ for (i in 1:n) {
   wss[i] <- km.out$tot.withinss
 }
 
-#Producing a scree plot
-wss_df <- tibble(clusters = 1:n, wss = wss)
+#Producing a scree plot - doing an "elbow test" on the data
+wss_df <- tibble(clusters = 1:10, wss = wss)
 
 #Displaying scree plot
 scree_plot <- ggplot(wss_df, aes(x = clusters, y = wss, group = 1)) +
@@ -546,4 +546,7 @@ price.graph +
        x = "Number of reviews (0 to 10)",
        y = "price x 10,000")
 
+
+#Calculating Mean Squared Error score
+mean(model$residuals^2)
 

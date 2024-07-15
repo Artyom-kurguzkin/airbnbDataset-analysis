@@ -1,27 +1,20 @@
-# COMP2031 - DATA ENGINEERING
+# mongodb-airbnb-dataset-analysis
 
-------------------------------------------------------------------------
+---
 
-## Introduction
 
-Currently, this repo is separated in to different sections. First, it is devided by parts, and then by whether it is code or data. Code is located in the `part-??/src/` directory, and any data files are located in the `part-??/dat/` directory. If anyone has a way they would rather organize it, feel free to change it as you see fit.
+Contributors: Lance Feldman, Artyom Kurguzkin, Cleary Molloy, Joshua Myers, Lucas Tyler
 
-In the end, all code will need to be merged in to a single file, but keeping them separate may make it easier for people to work with.
+---
 
-We are all collaborating on this, so feel free to change stuff as you see fit, just make sure you document what you changed and why.
+# Overview 
 
-## Part 1
+This project aimed to investigate sample airbnb dataset available at mongodb.com 
 
-Currently, part one just downloads the data from MongoDB, using my connection string. **My connection string will not work for you.**
+We looked for the most significant predictor for a listing to receive a high score review. 
 
-It also exports the data to a `bson` (binary json) file. This file can be loaded for further work by first using
+We found that the dataset was consistently biased towards high score reviews.
 
-``` r
-data = mongo(connection_string = <YOUR_CONNECTION_STRING_HERE>)
-```
+The review score was a complex metric made up of multiple variables (location, host friendliness, etc.). We compared correlation coefficients among these variables and the final score ratings to distinguish the most significant factor. 
 
-then load the file, by doing
-
-``` r
-data$import(file("part-01/dat/data.bson"), bson = True)
-```
+We concluded that the cleanliness of the listing was the most significant predictor of its score review. 
